@@ -49,6 +49,7 @@ class Announcement(models.Model):
     announcement_text = models.TextField()
 
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='announcements')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='announcements', null=True)
 
     def __str__(self):
         return self.title
