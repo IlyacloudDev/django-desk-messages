@@ -1,0 +1,13 @@
+{% extends 'default.html' %}
+
+{% block title %}
+    Detail of announcement
+{% endblock title %}
+
+{% block content %}
+    <hr>
+    <h1>"{{ announcement.title}}"</h1>
+    <h1>{{ announcement.time_in|date:'d M Y'}}</h1>
+    <hr>
+    <h1>{{ announcement.announcement_text}}</h1>
+{% endblock content %}
