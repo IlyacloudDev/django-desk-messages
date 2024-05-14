@@ -22,6 +22,9 @@ urlpatterns = [
     # path to admin panel
     path('admin/', admin.site.urls),
 
+    # path to own customize apps
+    path('', include('announcements.urls')),
+
     # paths for extensions apps
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
