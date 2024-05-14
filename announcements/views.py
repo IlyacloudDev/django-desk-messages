@@ -12,13 +12,19 @@ class AnnouncementList(ListView):
     paginate_by = 5
 
 
-class Announcement(DetailView):
+class AnnouncementDetail(DetailView):
     model = Announcement
     template_name = None
     context_object_name = 'announcement'
 
 
 class AnnouncementCreate(CreateView):
+    form_class = AnnouncementForm
+    model = Announcement
+    template_name = 'announcements/create.html'
+
+
+class AnnouncementUpdate(UpdateView):
     form_class = AnnouncementForm
     model = Announcement
     template_name = 'announcements/create.html'
