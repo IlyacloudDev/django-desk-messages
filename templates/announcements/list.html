@@ -16,14 +16,18 @@ Announcements
     {% if announcements %}
         {% for announcement in announcements %}
         <div align="left" style="background-color: #F0FFF0">
-            <h2>
-                <a href="{% url 'announcement_detail' pk=announcement.id %}" style="color: #000000">"{{ announcement.title }}":</a>
-            </h2>
+            <h4 style="color: #000000">
+                Category: {{ announcement.category }}
+            </h4>
+            <p></p>
             <h3>
-                {{announcement.announcement_text|safe }}
+                <a href="{% url 'announcement_detail' pk=announcement.id %}" style="color: #696969">"{{ announcement.title }}":</a>
             </h3>
-            <h6 style="text-align: left;">
-                Date: {{ announcement.time_in|date:'d M Y' }} <span style='padding-left:300px;'> author: @{{ announcement.author }} </span>
+            <h4>
+                {{announcement.announcement_text|safe }}
+            </h4>
+            <h6 style="text-align: left; color: #696969" >
+                Date: {{ announcement.time_in|date:'d M Y' }} <span style='padding-left:1000px;'> author: @{{ announcement.author }} </span>
             </h6>
         </div>
         <p></p>

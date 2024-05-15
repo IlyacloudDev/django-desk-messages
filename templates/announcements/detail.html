@@ -5,21 +5,21 @@
 {% endblock title %}
 
 {% block content %}
-    <h2 style="text-align: right;">
+    <h3 style="text-align: right;">
         <a href="{% url 'announcement_list' %}" style="color: #000000"> To main page </a>
         &nbsp; &nbsp;
         <a href="{% url 'announcement_update' pk=announcement.id %}" style="color: #000000"> Update </a>
-    </h2>
+    </h3>
     <h1>
         Details
     </h1>
     <hr/>
     <div align="left" style="background-color: #F0FFF0">
-        <h4>
-            Date: {{ announcement.time_in|date:'d M Y' }}
+        <h5 style="color: #696969">
+            Date: {{ announcement.time_in|date:'d M Y' }} <span style='padding-left:800px;'> Category: {{ announcement.category }} </span>
             <br>
             author: @{{ announcement.author }}
-        </h4>
+        </h5>
         <h2 style="text-align: center;">
             "{{ announcement.title }}":
         </h2>
