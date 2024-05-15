@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Author(models.Model):
@@ -17,7 +18,7 @@ class Category(models.Model):
     guild_masters = "GM"
     quests_givers = "QG"
     blacksmiths = "BS"
-    tanners = "TA"
+    tanners = "TN"
     potion_makers = "PM"
     spell_masters = "SM"
 
@@ -53,6 +54,9 @@ class Announcement(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('announcement_detail', args=[str(self.id)])
 
 
 class Comment(models.Model):
