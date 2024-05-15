@@ -4,7 +4,7 @@ from .views import AnnouncementList, AnnouncementDetail, AnnouncementCreate, Ann
 
 urlpatterns = [
     path('', AnnouncementList.as_view(), name='announcement_list'),
-    path('<int:pk>', AnnouncementDetail.as_view(), name='announcemet_detail'),
+    path('<int:pk>/', AnnouncementDetail.as_view(), name='announcement_detail'),
     path('create/', AnnouncementCreate.as_view(), name='announcement_create'),
-    path('update/', AnnouncementUpdate.as_view(), name='announcement_update'),
+    path('update/<int:pk>/', AnnouncementUpdate.as_view(), name='announcement_update'),
 ]
