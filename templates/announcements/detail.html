@@ -5,10 +5,26 @@
 {% endblock title %}
 
 {% block content %}
-    <hr>
-    <h1>"{{ announcement.title}}"</h1>
-    <h1>"{{ announcement.author}}"</h1>
-    <h1>{{ announcement.time_in|date:'d M Y'}}</h1>
-    <hr>
-    <h1>{{ announcement.announcement_text}}</h1>
+    <h2 style="text-align: right;">
+        <a href="{% url 'announcement_list' %}" style="color: #000000"> To main page </a>
+        &nbsp; &nbsp;
+        <a href="{% url 'announcement_update' pk=announcement.id %}" style="color: #000000"> Update </a>
+    </h2>
+    <h1>
+        Details
+    </h1>
+    <hr/>
+    <div align="left" style="background-color: #F0FFF0">
+        <h4>
+            Date: {{ announcement.time_in|date:'d M Y' }}
+            <br>
+            author: @{{ announcement.author }}
+        </h4>
+        <h2 style="text-align: center;">
+            "{{ announcement.title }}":
+        </h2>
+        <h3 style="text-align: center;">
+            {{announcement.announcement_text|safe }}
+        </h3>
+    </div>
 {% endblock content %}
