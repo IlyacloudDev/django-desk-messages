@@ -14,7 +14,7 @@ class AnnouncementList(ListView):
 
 class AnnouncementDetail(DetailView):
     model = Announcement
-    template_name = None
+    template_name = 'announcements/detail.html'
     context_object_name = 'announcement'
 
 
