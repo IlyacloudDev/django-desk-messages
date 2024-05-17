@@ -1,0 +1,61 @@
+{% extends 'default.html' %}
+
+{% load custom_tags %}
+
+{% block title %}
+Announcements
+{% endblock title %}
+
+{% block content %}
+    <p></p>
+    <h3 style="text-align: left;">
+        Announcements  of @{{ user.username }}
+    </h3>
+    <p></p>
+    <hr/>
+    {% if announcements %}
+        {% for announcement in announcements %}
+        <div align="left" style="background-color: #F0FFF0">
+            <h4 style="text-align: left;"> <a href="{% url 'announcement_update' pk=announcement.id %}"> Update </a> </h4>
+            <h4 style="color: #000000">
+                Category: {{ announcement.category }}
+            </h4>
+            <p></p>
+            <h3>
+                <a href="{% url 'announcement_detail' pk=announcement.id %}">"{{ announcement.title }}":</a>
+            </h3>
+            <h4>
+                {{announcement.announcement_text|safe }}
+            </h4>
+            <h6 style="text-align: left; color: #696969" >
+                Date: {{ announcement.time_in|date:'d M Y' }} <span style='padding-left:1000px;'> author: @{{ announcement.author }} </span>
+            </h6>
+        </div>
+        <p></p>
+        {% endfor %}
+    {% else %}
+        <h3>No announcements</h3>
+    {% endif %}
+
+    {# Добавляем пагинацию на страницу #}
+
+    {% if page_obj.has_previous %}
+        {# Для каждой ссылки пагинации указываем обработку через новый тег #}
+        <a href="?{% url_replace page=1 %}">1</a>
+        {% if page_obj.previous_page_number != 1 %}
+            ...
+            <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+        {% endif %}
+    {% endif %}
+
+    {{ page_obj.number }}
+
+    {% if page_obj.has_next %}
+        <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+        {% if paginator.num_pages != page_obj.next_page_number %}
+            ...
+            <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+    {% endif %}
+
+{% endblock content %}
