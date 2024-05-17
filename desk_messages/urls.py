@@ -27,4 +27,6 @@ urlpatterns = [
 
     # paths for extensions apps
     path('ckeditor/', include('ckeditor_uploader.urls')),
+
+    path('accounts/', include('allauth.urls')),
 ]
