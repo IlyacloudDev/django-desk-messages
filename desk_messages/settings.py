@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     # own customize apps
     'announcements',
@@ -45,10 +46,10 @@ INSTALLED_APPS = [
     # extensions apps
     'ckeditor',
     'ckeditor_uploader',
+
+    'allauth',
+    'allauth.account',
 ]
-
-
-SITE_ID = 1
 
 
 MIDDLEWARE = [
@@ -59,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'desk_messages.urls'
@@ -78,6 +81,13 @@ TEMPLATES = [
         },
     },
 ]
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 
 WSGI_APPLICATION = 'desk_messages.wsgi.application'
 
@@ -210,3 +220,49 @@ CKEDITOR_CONFIGS = {
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+SITE_URL = 'http://127.0.0.1:8000/'
+
+
+SITE_ID = 1
+
+
+ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_UNIQUE_EMAIL = True
+
+ACCOUNT_USERNAME_REQUIRED = True
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# 'django.core.mail.backends.smtp.EmailBackend'
+# 'django.core.mail.backends.console.EmailBackend'
+
+
+EMAIL_HOST = 'smtp.yandex.ru'
+
+EMAIL_PORT = 465
+
+EMAIL_HOST_USER = 'desk-messages.notifications'
+
+EMAIL_HOST_PASSWORD = 'yujcvfkpwvrwkqxe'
+
+EMAIL_USE_TLS = False
+
+EMAIL_USE_SSL = True
+
+
+DEFAULT_FROM_EMAIL = 'desk-messages.notifications@yandex.ru'
+
+
+LOGIN_URL = '/accounts/login/'
+
+LOGIN_REDIRECT_URL = '/'
+
+
+LOGOUT_REDIRECT_URL = '/'
