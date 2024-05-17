@@ -1,6 +1,7 @@
-from django.views.generic import ListView, CreateView, UpdateView, DetailView
+from django.views.generic import View, ListView, CreateView, UpdateView, DetailView
+from django.shortcuts import render
 
-from .models import Announcement
+from .models import Announcement, Author
 from .forms import AnnouncementForm
 
 
@@ -28,3 +29,12 @@ class AnnouncementUpdate(UpdateView):
     form_class = AnnouncementForm
     model = Announcement
     template_name = 'announcements/create.html'
+
+
+class AuthorAnnouncementList(View):
+    def get(self, request):
+        current_user = request.user
+        user_id = current_user.id
+        author_pk = Author.objects.get(pk=user_id).id
+        announcements = Announcement.objects.filter(author_id=author_pk)
+        return render(request, 'announcements/announcements_of_user.html', context={'announcements': announcements})
