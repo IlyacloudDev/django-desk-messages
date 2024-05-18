@@ -5,5 +5,5 @@ class AnnouncementsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'announcements'
 
-    def ready(self):
-        import announcements.signals
+    # def ready(self):
+    #     import announcements.signals
