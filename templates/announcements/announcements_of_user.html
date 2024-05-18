@@ -9,7 +9,7 @@ Announcements
 {% block content %}
     <p></p>
     <h3 style="text-align: left;">
-        Announcements  of @{{ user.username }}
+        Announcements  of @{{ user.username }} | <a href="{% url 'announcement_create' %}"> Create new announcement </a>
     </h3>
     <p></p>
     <hr/>
