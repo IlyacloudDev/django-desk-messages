@@ -10,7 +10,7 @@ class AnnouncementList(ListView):
     ordering = '-time_in'
     template_name = 'announcements/list.html'
     context_object_name = 'announcements'
-    paginate_by = 5
+    paginate_by = 4
 
 
 class AnnouncementDetail(DetailView):
@@ -24,11 +24,21 @@ class AnnouncementCreate(CreateView):
     model = Announcement
     template_name = 'announcements/create.html'
 
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        form.instance.author = Author.objects.get(author_name=self.request.user.id)
+        post.save()
+        return super().form_valid(form)
+
 
 class AnnouncementUpdate(UpdateView):
     form_class = AnnouncementForm
     model = Announcement
     template_name = 'announcements/create.html'
+
+    def form_valid(self, form):
+        form.instance.author = Author.objects.get(author_name=self.request.user.id)
+        return super().form_valid(form)
 
 
 class AuthorAnnouncementList(View):
