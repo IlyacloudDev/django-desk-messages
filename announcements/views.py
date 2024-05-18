@@ -45,6 +45,6 @@ class AuthorAnnouncementList(View):
     def get(self, request):
         current_user = request.user
         user_id = current_user.id
-        author_pk = Author.objects.get(pk=user_id).id
+        author_pk = Author.objects.get(author_name=user_id).id
         announcements = Announcement.objects.filter(author_id=author_pk)
         return render(request, 'announcements/announcements_of_user.html', context={'announcements': announcements})
