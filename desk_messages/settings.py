@@ -239,6 +239,9 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 
+ACCOUNT_FORMS = {"signup": "announcements.forms.CustomSignupForm"}
+
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # 'django.core.mail.backends.smtp.EmailBackend'
 # 'django.core.mail.backends.console.EmailBackend'
