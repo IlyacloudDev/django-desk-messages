@@ -18,6 +18,11 @@ class AnnouncementDetail(DetailView):
     template_name = 'announcements/detail.html'
     context_object_name = 'announcement'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['comments'] = Comment.objects.filter(announcement=self.kwargs['pk'])
+        return context
+
 
 class AnnouncementCreate(CreateView):
     form_class = AnnouncementForm
