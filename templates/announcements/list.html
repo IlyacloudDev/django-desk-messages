@@ -26,6 +26,9 @@ Announcements
             <h4>
                 {{announcement.announcement_text|safe }}
             </h4>
+            <h5>
+                <a href="{% url 'comment_create' pk=announcement.id %}">-> Comment</a>
+            </h5>
             <h6 style="text-align: left; color: #696969" >
                 Date: {{ announcement.time_in|date:'d M Y' }} <span style='padding-left:1000px;'> author: @{{ announcement.author }} </span>
             </h6>
