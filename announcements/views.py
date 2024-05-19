@@ -1,8 +1,8 @@
 from django.views.generic import View, ListView, CreateView, UpdateView, DetailView
 from django.shortcuts import render
 
-from .models import Announcement, Author
-from .forms import AnnouncementForm
+from .models import Announcement, Author, Comment
+from .forms import AnnouncementForm, CommentForm
 
 
 class AnnouncementList(ListView):
@@ -25,9 +25,9 @@ class AnnouncementCreate(CreateView):
     template_name = 'announcements/create.html'
 
     def form_valid(self, form):
-        post = form.save(commit=False)
+        announcement = form.save(commit=False)
         form.instance.author = Author.objects.get(author_name=self.request.user.id)
-        post.save()
+        announcement.save()
         return super().form_valid(form)
 
 
@@ -48,3 +48,16 @@ class AuthorAnnouncementList(View):
         author_pk = Author.objects.get(author_name=user_id).id
         announcements = Announcement.objects.filter(author_id=author_pk)
         return render(request, 'announcements/announcements_of_user.html', context={'announcements': announcements})
+
+
+class CommentCreate(CreateView):
+    form_class = CommentForm
+    model = Comment
+    template_name = 'comments/create.html'
+
+    def form_valid(self, form, *args, **kwargs):
+        comment = form.save(commit=False)
+        form.instance.author = Author.objects.get(author_name=self.request.user.id)
+        form.instance.announcement = Announcement.objects.get(pk=self.kwargs['pk'])
+        comment.save()
+        return super().form_valid(form)
