@@ -21,7 +21,24 @@
             "{{ announcement.title }}":
         </h2>
         <h3 style="text-align: center;">
-            {{announcement.announcement_text|safe }}
+            {{ announcement.announcement_text|safe }}
         </h3>
     </div>
+    <h1>
+        Comments
+    </h1>
+    {% if comments %}
+        {% for comment in comments %}
+            <div align="left" style="background-color: #FAF0E6">
+                <h5 style="color: #696969">
+                    Author of comment: @{{ comment.author.author_name.username }}
+                </h5>
+                <h4 style="text-align: left;">
+                    {{ comment.comment_text }}
+                </h4>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3> - No comments</h3>
+    {% endif %}
 {% endblock content %}
