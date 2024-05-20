@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import View, ListView, CreateView, UpdateView, DetailView, DeleteView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Announcement, Author, Comment
@@ -77,10 +77,8 @@ class CommentDelete(DeleteView):
     success_url = reverse_lazy('author_announcements')
 
 
-class CommentAllow(View):
-    def post(self, request, **kwargs):
-        action = request.POST.get('action')
-        comment = Comment.objects.filter(pk=self.kwargs['pk'])
-        if action == 'allow':
-            Comment.objects.filter(pk=self.kwargs['pk']).update(allowed=True)
-        return render(request, 'comments/allow.html', context={'comment': comment})
+def comment_allow(request, pk):
+    comment = Comment.objects.get(pk=pk)
+    comment.allowed = True
+    comment.save()
+    return redirect('author_announcements')
