@@ -63,6 +63,7 @@ class Announcement(models.Model):
 
 class Comment(models.Model):
     comment_text = models.TextField()
+    allowed = models.BooleanField(default=False)
 
     announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='comments')
@@ -70,5 +71,5 @@ class Comment(models.Model):
     def __str__(self):
         return self.comment_text
 
-    def get_absolute_url(self):
-        return reverse('announcement_list')
+    def get_absolute_url(self, **kwargs):
+        return reverse('announcement_detail', args=[str(self.announcement.id)])
