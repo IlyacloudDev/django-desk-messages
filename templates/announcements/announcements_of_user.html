@@ -44,12 +44,19 @@ Announcements
                             {{ comment.comment_text }}
                         </h4>
                         <h5 style="text-align: center;">
-                            <a href="{% url 'comment_delete' pk=comment.id %}"> Delete comment </a> | <a href="{% url 'comment_allow' pk=comment.id %}"> Allow comment </a>
+                            {% if comment and comment.allowed == False %}
+                                <a href="{% url 'comment_delete' pk=comment.id %}"> Delete comment </a> | <a href="{% url 'comment_allow' pk=comment.id %}"> Allow comment </a>
+                            {% elif comment.allowed == True %}
+                                Отклик принят!
+                                <br/>
+                                <a href="{% url 'comment_delete' pk=comment.id %}"> Delete comment </a>
+                            {% endif %}
                         </h5>
-                        <hr/>
+                        <hr>
                     {% endfor %}
                 {% else %}
                     <h3> - No comments for "{{ announcement.title }}"</h3>
+                    <hr>
                 {% endif %}
             </div>
             <p></p>
