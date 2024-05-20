@@ -1,7 +1,9 @@
 from django.urls import path
 from .views import (AnnouncementList, AnnouncementDetail,
                     AnnouncementCreate, AnnouncementUpdate,
-                    AuthorAnnouncementList, CommentCreate)
+                    AuthorAnnouncementList, CommentCreate,
+                    CommentDelete, CommentAllow
+                    )
 
 
 urlpatterns = [
@@ -9,6 +11,8 @@ urlpatterns = [
     path('<int:pk>/', AnnouncementDetail.as_view(), name='announcement_detail'),
     path('create/', AnnouncementCreate.as_view(), name='announcement_create'),
     path('update/<int:pk>/', AnnouncementUpdate.as_view(), name='announcement_update'),
-    path('own/', AuthorAnnouncementList.as_view(), name='author_announcements'),
-    path('comment/<int:pk>/create', CommentCreate.as_view(), name='comment_create')
+    path('own/profile/', AuthorAnnouncementList.as_view(), name='author_announcements'),
+    path('comment/<int:pk>/create', CommentCreate.as_view(), name='comment_create'),
+    path('delete/<int:pk>/comment', CommentDelete.as_view(), name='comment_delete'),
+    path('allow/<int:pk>/comment', CommentAllow.as_view(), name='comment_allow')
 ]
