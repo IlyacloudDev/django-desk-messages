@@ -1,0 +1,23 @@
+{% extends 'default.html' %}
+
+{% block title %}
+Allow comment
+{% endblock title %}
+
+{% block content %}
+    <h4 style="text-align: center;">
+        {{ comment.author.author_name.username }}
+        <br/>
+        {{ comment.comment_text }}
+    </h4>
+    <form method="post">
+        {% csrf_token %}
+        {% if comment.allowed == True %}
+             <h3> - Comment already allowed </h3>
+        {% else %}
+            <button name="action" value="allow">
+                Allow
+            </button>
+        {% endif %}
+    </form>
+{% endblock content %}
