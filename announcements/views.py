@@ -56,7 +56,7 @@ class AuthorAnnouncementList(View):
         current_user = request.user
         user_id = current_user.id
         author_pk = Author.objects.get(author_name=user_id).id
-        announcements = Announcement.objects.filter(author_id=author_pk)
+        announcements = Announcement.objects.filter(author_id=author_pk).order_by('-time_in')
         filterset = AnnouncementsFilter(self.request.GET, announcements)
         return render(request, 'announcements/announcements_of_user.html', context={'announcements': announcements, 'filterset': filterset})
 
@@ -70,6 +70,9 @@ class CommentCreate(LoginRequiredMixin, CreateView):
         comment = form.save(commit=False)
         form.instance.author = Author.objects.get(author_name=self.request.user.id)
         form.instance.announcement = Announcement.objects.get(pk=self.kwargs['pk'])
+        author_of_comment_id = Author.objects.get(author_name=self.request.user.id).id
+        if author_of_comment_id == comment.announcement.author.author_name.id:
+            comment.allowed = True
         comment.save()
         comment_created.delay(comment.pk)
         return super().form_valid(form)
