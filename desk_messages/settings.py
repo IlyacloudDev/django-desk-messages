@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'announcements',
 
     # extensions apps
+    'django_filters',
+
     'ckeditor',
     'ckeditor_uploader',
 
