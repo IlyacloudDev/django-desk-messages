@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Announcement, Author, Comment
 from .forms import AnnouncementForm, CommentForm
+from .filters import AnnouncementsFilter
 
 
 class AnnouncementList(ListView):
@@ -55,7 +56,8 @@ class AuthorAnnouncementList(View):
         user_id = current_user.id
         author_pk = Author.objects.get(author_name=user_id).id
         announcements = Announcement.objects.filter(author_id=author_pk)
-        return render(request, 'announcements/announcements_of_user.html', context={'announcements': announcements})
+        filterset = AnnouncementsFilter(self.request.GET, announcements)
+        return render(request, 'announcements/announcements_of_user.html', context={'announcements': announcements, 'filterset': filterset})
 
 
 class CommentCreate(LoginRequiredMixin, CreateView):
