@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Announcement, Author, Comment
 from .forms import AnnouncementForm, CommentForm
 from .filters import AnnouncementsFilter
+from .tasks import comment_created, comment_accept
 
 
 class AnnouncementList(ListView):
@@ -70,6 +71,7 @@ class CommentCreate(LoginRequiredMixin, CreateView):
         form.instance.author = Author.objects.get(author_name=self.request.user.id)
         form.instance.announcement = Announcement.objects.get(pk=self.kwargs['pk'])
         comment.save()
+        comment_created.delay(comment.pk)
         return super().form_valid(form)
 
 
@@ -83,4 +85,5 @@ def comment_allow(request, pk):
     comment = Comment.objects.get(pk=pk)
     comment.allowed = True
     comment.save()
+    comment_accept.delay(comment.pk)
     return redirect('author_announcements')
