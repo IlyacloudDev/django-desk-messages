@@ -27,8 +27,8 @@ Announcements
     </h3>
     <p></p>
     <hr/>
-    {% if announcements %}
-        {% for announcement in announcements %}
+    {% if filterset.qs %}
+        {% for announcement in filterset.qs %}
             <div align="left" style="background-color: #F0FFF0">
                 <h4 style="text-align: left;"> <a href="{% url 'announcement_update' pk=announcement.id %}"> Update </a> </h4>
                 <h4 style="color: #000000">

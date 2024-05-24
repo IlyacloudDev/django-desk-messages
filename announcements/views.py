@@ -57,8 +57,8 @@ class AuthorAnnouncementList(View):
         user_id = current_user.id
         author_pk = Author.objects.get(author_name=user_id).id
         announcements = Announcement.objects.filter(author_id=author_pk).order_by('-time_in')
-        filterset = AnnouncementsFilter(self.request.GET, announcements)
-        return render(request, 'announcements/announcements_of_user.html', context={'announcements': announcements, 'filterset': filterset})
+        filterset = AnnouncementsFilter(self.request.GET, queryset=announcements)
+        return render(request, 'announcements/announcements_of_user.html', context={'filterset': filterset})
 
 
 class CommentCreate(LoginRequiredMixin, CreateView):
