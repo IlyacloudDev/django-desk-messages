@@ -70,11 +70,13 @@ class CommentCreate(LoginRequiredMixin, CreateView):
         comment = form.save(commit=False)
         form.instance.author = Author.objects.get(author_name=self.request.user.id)
         form.instance.announcement = Announcement.objects.get(pk=self.kwargs['pk'])
-        author_of_comment_id = Author.objects.get(author_name=self.request.user.id).id
+        author_of_comment_id = Author.objects.get(author_name=self.request.user.id).author_name.id
         if author_of_comment_id == comment.announcement.author.author_name.id:
             comment.allowed = True
-        comment.save()
-        comment_created.delay(comment.pk)
+            comment.save()
+        else:
+            comment.save()
+            comment_created.delay(comment.pk)
         return super().form_valid(form)
 
 
