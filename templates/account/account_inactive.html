@@ -1,0 +1,20 @@
+{% extends "allauth/layouts/entrance.html" %}
+
+{% load i18n %}
+
+{% load allauth %}
+
+{% block head_title %}
+    Activate account
+{% endblock head_title %}
+
+{% block content %}
+    <h2 style="text-align: center;">Input activation code</h2>
+    <form action="{% url 'confirm_user' %}" method="post" style="text-align: center;">
+        {% csrf_token %}
+        <label>
+            <input class="text" type="text" name="code" placeholder="Input activation code">
+        </label>
+        <input type="submit" value="Confirm">
+    </form>
+{% endblock content %}
