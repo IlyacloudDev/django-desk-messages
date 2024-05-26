@@ -1,13 +1,14 @@
 from django.urls import path
-from .views import (AnnouncementList, AnnouncementDetail,
-                    AnnouncementCreate, AnnouncementUpdate,
-                    AuthorAnnouncementList, CommentCreate,
-                    CommentDelete, comment_allow,
-                    CommentList
+from .views import (ConfirmUser, AnnouncementList,
+                    AnnouncementDetail, AnnouncementCreate,
+                    AnnouncementUpdate, AuthorAnnouncementList,
+                    CommentCreate, CommentDelete,
+                    comment_allow, CommentList,
                     )
 
 
 urlpatterns = [
+    path('confirm/', ConfirmUser.as_view(), name='confirm_user'),
     path('', AnnouncementList.as_view(), name='announcement_list'),
     path('<int:pk>/', AnnouncementDetail.as_view(), name='announcement_detail'),
     path('create/', AnnouncementCreate.as_view(), name='announcement_create'),
