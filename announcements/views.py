@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Announcement, Author, Comment
 from .forms import AnnouncementForm, CommentForm
-from .filters import AnnouncementsFilter
+from .filters import AnnouncementsFilter, CommentFilter
 from .tasks import comment_created, comment_accept
 
 
@@ -92,3 +92,18 @@ def comment_allow(request, pk):
     comment.save()
     comment_accept.delay(comment.pk)
     return redirect('author_announcements')
+
+
+class CommentList(ListView):
+    model = Comment
+    template_name = 'comments/list_filter.html'
+
+    def get_queryset(self):
+        queryset = Comment.objects.filter(announcement__author__author_name=self.request.user.id)
+        self.filterset = CommentFilter(self.request.GET, queryset, request=self.request.user.id)
+        return self.filterset.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filterset'] = self.filterset
+        return context
