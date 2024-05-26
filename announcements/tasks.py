@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils import timezone
@@ -9,7 +8,7 @@ import datetime
 from celery import shared_task
 
 from desk_messages import settings
-from announcements.models import Comment, Announcement, Author
+from announcements.models import Comment, Announcement, Author, User
 
 
 @shared_task
@@ -24,7 +23,8 @@ def comment_created(pk, **kwargs):
     )
     html_content = (
         f'<b>Comment</b>: <i>{comment.comment_text}</i> <br>'
-        '<u>Go to profile moderate comment</u> -> <a href="{% url "author_announcements" %}">Here</a>'
+        f'<u>Go to profile moderate comment</u> -> <a href="{settings.SITE_URL}own/profile/">'
+        f'Here</a>'
     )
     msg = EmailMultiAlternatives(subject, text_content, settings.DEFAULT_FROM_EMAIL, [email])
     msg.attach_alternative(html_content, "text/html")
@@ -43,7 +43,8 @@ def comment_accept(pk, **kwargs):
     )
     html_content = (
         f'<b>Comment</b>: <i>{comment.comment_text}</i> <br>'
-        f'<u>You can check comment </u> -> <a {settings.SITE_URL}{comment.announcement.id}/">Here</a>'
+        f'<u>You can check comment </u> -> <a href="{settings.SITE_URL}{comment.announcement.id}/">'
+        f'Here</a>'
     )
     msg = EmailMultiAlternatives(subject, text_content, settings.DEFAULT_FROM_EMAIL, [email])
     msg.attach_alternative(html_content, "text/html")
