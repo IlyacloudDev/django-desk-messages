@@ -233,6 +233,9 @@ SITE_URL = 'http://127.0.0.1:8000/'
 SITE_ID = 1
 
 
+AUTH_USER_MODEL = 'announcements.User'
+
+
 ACCOUNT_EMAIL_REQUIRED = True
 
 ACCOUNT_UNIQUE_EMAIL = True
@@ -241,13 +244,13 @@ ACCOUNT_USERNAME_REQUIRED = True
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 
 ACCOUNT_FORMS = {"signup": "announcements.forms.CustomSignupForm"}
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # 'django.core.mail.backends.smtp.EmailBackend'
 # 'django.core.mail.backends.console.EmailBackend'
 
@@ -271,7 +274,6 @@ DEFAULT_FROM_EMAIL = 'desk-messages.notifications@yandex.ru'
 LOGIN_URL = '/accounts/login/'
 
 LOGIN_REDIRECT_URL = '/'
-
 
 LOGOUT_REDIRECT_URL = '/'
 
