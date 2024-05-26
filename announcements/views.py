@@ -1,13 +1,28 @@
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import View, ListView, CreateView, UpdateView, DetailView, DeleteView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Announcement, Author, Comment
+from .models import Announcement, Author, Comment, User
 from .forms import AnnouncementForm, CommentForm
 from .filters import AnnouncementsFilter, CommentFilter
 from .tasks import comment_created, comment_accept
+
+
+class ConfirmUser(UpdateView):
+    mode = User
+    context_object_name = 'confirm_user'
+
+    def post(self, request, *args, **kwargs):
+        if 'code' in request.POST:
+            user = User.objects.filter(code=request.POST['code'])
+            if user.exists():
+                user.update(is_active=True)
+                user.update(code=None)
+            else:
+                return render(self.request, 'users/invalid_code.html')
+        return redirect('account_login')
 
 
 class AnnouncementList(ListView):
@@ -55,10 +70,14 @@ class AuthorAnnouncementList(View):
     def get(self, request):
         current_user = request.user
         user_id = current_user.id
-        author_pk = Author.objects.get(author_name=user_id).id
-        announcements = Announcement.objects.filter(author_id=author_pk).order_by('-time_in')
-        filterset = AnnouncementsFilter(self.request.GET, queryset=announcements)
-        return render(request, 'announcements/announcements_of_user.html', context={'filterset': filterset})
+        try:
+            author_pk = Author.objects.get(author_name=user_id).id
+        except Author.DoesNotExist:
+            return redirect('announcement_list')
+        else:
+            announcements = Announcement.objects.filter(author_id=author_pk).order_by('-time_in')
+            filterset = AnnouncementsFilter(self.request.GET, queryset=announcements)
+            return render(request, 'announcements/announcements_of_user.html', context={'filterset': filterset})
 
 
 class CommentCreate(LoginRequiredMixin, CreateView):
