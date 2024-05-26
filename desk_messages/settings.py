@@ -250,7 +250,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_FORMS = {"signup": "announcements.forms.CustomSignupForm"}
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # 'django.core.mail.backends.smtp.EmailBackend'
 # 'django.core.mail.backends.console.EmailBackend'
 
