@@ -3,7 +3,7 @@ from django import forms
 
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
-from .models import Announcement, Author, Category, Comment
+from .models import Announcement, Author, Category, Comment, User
 
 
 class AnnouncementAdminForm(forms.ModelForm):
@@ -23,3 +23,4 @@ admin.site.register(Announcement, AnnouncementAdmin)
 admin.site.register(Author)
 admin.site.register(Category)
 admin.site.register(Comment)
+admin.site.register(User)
