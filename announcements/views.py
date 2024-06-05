@@ -118,7 +118,7 @@ class CommentList(ListView):
     template_name = 'comments/list_filter.html'
 
     def get_queryset(self):
-        queryset = Comment.objects.filter(announcement__author__author_name=self.request.user.id)
+        queryset = Comment.objects.filter(announcement__author__author_name=self.request.user.id).order_by('-time_in')
         self.filterset = CommentFilter(self.request.GET, queryset, request=self.request.user.id)
         return self.filterset.qs
 
