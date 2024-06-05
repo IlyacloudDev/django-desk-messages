@@ -66,6 +66,7 @@ class Announcement(models.Model):
 
 
 class Comment(models.Model):
+    time_in = models.DateTimeField(auto_now_add=True)
     comment_text = models.TextField()
     allowed = models.BooleanField(default=False)
 
