@@ -14,13 +14,30 @@ class AnnouncementAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
+@admin.register(Announcement)
 class AnnouncementAdmin(admin.ModelAdmin):
-    """ Announcements """
     form = AnnouncementAdminForm
+    list_display = ('id', 'title', 'announcement_text', 'author', 'category', 'time_in')
+    search_fields = ('title',)
 
 
-admin.site.register(Announcement, AnnouncementAdmin)
-admin.site.register(Author)
-admin.site.register(Category)
-admin.site.register(Comment)
-admin.site.register(User)
+@admin.register(Author)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ('id', 'author_name',)
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'category_name',)
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'author', 'comment_text', 'announcement', 'allowed', 'time_in')
+    search_fields = ('author',)
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('id', 'username', 'email')
+    search_fields = ('username', 'email')
