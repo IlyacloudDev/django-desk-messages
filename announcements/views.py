@@ -66,6 +66,12 @@ class AnnouncementUpdate(UpdateView):
         return super().form_valid(form)
 
 
+class AnnouncementDelete(DeleteView):
+    model = Announcement
+    template_name = 'announcements/delete.html'
+    success_url = reverse_lazy('author_announcements')
+
+
 class AuthorAnnouncementList(View):
     def get(self, request):
         current_user = request.user
