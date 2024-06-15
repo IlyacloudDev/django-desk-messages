@@ -30,7 +30,7 @@ Announcements
     {% if filterset.qs %}
         {% for announcement in filterset.qs %}
             <div align="left" style="background-color: #F0FFF0">
-                <h4 style="text-align: left;"> <a href="{% url 'announcement_update' pk=announcement.id %}"> Update </a> </h4>
+                <h4 style="text-align: left;"> <a href="{% url 'announcement_update' pk=announcement.id %}"> Update </a> | <a href="{% url 'announcement_delete' pk=announcement.id %}"> Delete </a> </h4>
                 <h4 style="color: #000000">
                     Category: {{ announcement.category }}
                 </h4>
